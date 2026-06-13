@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Which Finance Pathway Are You?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F4F3; --surface:#FFFFFF; --ink:#16201D;
+    --petrol:#0C4A45; --amber:#D98A1E; --muted:#5E6B66; --line:#E2E6E3;
+    --serif:'Fraunces',Georgia,serif; --sans:'Archivo',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .wrap{max-width:680px;margin:0 auto;padding:28px 22px 80px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--petrol);font-weight:600}
+  .progress{display:flex;align-items:center;gap:14px;margin-bottom:30px}
+  .bar{flex:1;height:4px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--petrol);width:0;border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+  .count{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+  .intro{text-align:center;padding-top:24px}
+  .intro .eyebrow{margin-bottom:18px}
+  .intro h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,8vw,58px);line-height:1.02;letter-spacing:-.02em}
+  .intro h1 em{font-style:italic;color:var(--petrol)}
+  .intro p{color:var(--muted);font-size:17px;max-width:46ch;margin:20px auto 0}
+  .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:30px auto 0;max-width:480px}
+  .badges span{font-family:var(--mono);font-size:11px;padding:6px 11px;border:1px solid var(--line);border-radius:99px;background:var(--surface);color:var(--muted)}
+  .btn{font-family:var(--sans);font-weight:700;font-size:16px;letter-spacing:.01em;color:#fff;background:var(--ink);border:0;border-radius:99px;padding:16px 34px;cursor:pointer;margin-top:34px;transition:transform .12s,background .2s}
+  .btn:hover{background:var(--petrol);transform:translateY(-2px)}
+  .note{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:18px}
+  .scene{text-align:center;margin-bottom:6px}
+  .scene svg{width:92px;height:92px}
+  .qnum{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:600;text-align:center;margin-bottom:10px}
+  .q{font-family:var(--serif);font-weight:500;font-size:clamp(24px,5vw,32px);line-height:1.18;letter-spacing:-.01em;text-align:center;margin-bottom:28px}
+  .opts{display:flex;flex-direction:column;gap:11px}
+  .opt{display:flex;align-items:center;gap:14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:17px 18px;cursor:pointer;font-family:var(--sans);font-size:16px;color:var(--ink);line-height:1.35;transition:border-color .15s,transform .12s,box-shadow .15s}
+  .opt:hover{border-color:var(--petrol);transform:translateY(-2px);box-shadow:0 6px 20px -12px rgba(12,74,69,.5)}
+  .opt .key{font-family:var(--mono);font-weight:600;font-size:13px;color:var(--petrol);border:1px solid var(--line);border-radius:8px;width:30px;height:30px;display:grid;place-items:center;flex-shrink:0}
+  .opt:hover .key{background:var(--petrol);color:#fff;border-color:var(--petrol)}
+  .result{text-align:center}
+  .rbadge{width:120px;height:120px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center}
+  .rbadge svg{width:62px;height:62px}
+  .result .eyebrow{color:var(--amber)}
+  .result h2{font-family:var(--serif);font-weight:600;font-size:clamp(32px,7vw,48px);line-height:1.04;letter-spacing:-.02em;margin:6px 0 4px}
+  .functions{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted);margin-bottom:22px}
+  .writeup{font-size:17px;line-height:1.6;color:#243029;max-width:48ch;margin:0 auto 22px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+  .writeup b{color:var(--ink)}
+  .traits{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .traits span{font-family:var(--mono);font-size:12px;padding:7px 13px;border-radius:99px;font-weight:500;color:#fff}
+  .also{font-size:14px;line-height:1.5;color:var(--muted);max-width:46ch;margin:0 auto 24px;padding:13px 16px;border:1px dashed var(--line);border-radius:12px}
+  .also b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:5px}
+  .runner{font-size:14.5px;color:var(--muted);margin-bottom:26px}
+  .runner b{color:var(--ink)}
+  .ractions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--ink);font-size:14px;padding:13px 22px}
+  .btn.ghost:hover{background:var(--ink);color:#fff;transform:translateY(-2px)}
+  .gallery{margin-top:40px;display:none;text-align:left}
+  .gallery.show{display:block}
+  .gallery h3{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:center;margin-bottom:18px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}}
+  .gcard{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px;display:flex;gap:12px;align-items:flex-start}
+  .gcard .gi{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;flex-shrink:0}
+  .gcard .gi svg{width:22px;height:22px}
+  .gcard h4{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .gcard p{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .fade{animation:fade .4s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.fade{animation:none}.bar i{transition:none}}
+  .credit{text-align:center;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:46px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ============ RESULTS: the finance functions ============ */
+const TYPES = {
+  trader:   {name:"The Trader", color:"#C0473C", funcs:"Sales & Trading · Hedge Funds",
+    icon:'<path d="M3 17l5-5 4 3 7-8"/><path d="M16 7h5v5"/>',
+    blurb:"You think in real time. You're comfortable making a call with incomplete information, being wrong fast, and moving on. A live scoreboard energises rather than scares you, and you read the <b>mood of the room</b> as much as the facts. Trading desks and hedge funds reward exactly this: decisiveness, nerve, and a competitive streak.",
+    traits:["Decisive","Fast","Risk-aware","Competitive"],
+    also:"Quant trading, or a markets seat at an institution like MAS or GIC."},
+  analyst:  {name:"The Researcher", color:"#0C4A45", funcs:"Equity Research · Asset Management",
+    icon:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+    blurb:"You'd rather be <b>right over time</b> than loud right now. You enjoy going three layers deeper than everyone else, forming a view nobody handed you, and defending it with evidence. Equity research and asset management pay you to do exactly that — build conviction, write it down, and let the thesis play out.",
+    traits:["Analytical","Curious","Patient","Opinionated"],
+    also:"Economics & policy work (MAS, GIC) or a quant research role."},
+  dealmaker:{name:"The Dealmaker", color:"#9A3B6E", funcs:"Investment Banking",
+    icon:'<path d="M4 7h16v4H4z"/><path d="M4 11v8h16v-8"/><path d="M9 15h6"/>',
+    blurb:"You thrive when the stakes and the pressure are high. You're polished, allergic to a sloppy job, and you find an odd satisfaction in pulling something complex over the line on no sleep. Investment banking runs on exactly that stamina, attention to detail under pressure, and sheer <b>drive to close</b>.",
+    traits:["Driven","Polished","High stamina","Precise"],
+    also:"Corporate development or strategy consulting — the same deal energy, company-side."},
+  vc:       {name:"The Backer", color:"#D98A1E", funcs:"Venture Capital",
+    icon:'<path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5L12 16l-5 2.6 1-5.5-4-3.9 5.5-.8z"/>',
+    blurb:"You back <b>people and possibility</b> before there's proof. Ambiguity doesn't paralyse you — it excites you. You spot patterns early, you're optimistic by default, and you'd rather bet on a brilliant person with a half-formed idea than wait for the safe option. That instinct is the heart of venture capital.",
+    traits:["Visionary","People-first","Optimistic","Bold"],
+    also:"Growth equity, a startup operating role, or founding your own thing."},
+  pe:       {name:"The Operator", color:"#2B5F4F", funcs:"Private Equity",
+    icon:'<rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/><path d="M12 13v3"/>',
+    blurb:"You have an <b>ownership mindset</b>. You don't just want to analyse something — you want to take the wheel and make it better. You're disciplined, hands-on, and play the long game. Private equity is built for people who take things, fix them, and create value over years rather than days.",
+    traits:["Strategic","Hands-on","Disciplined","Long-game"],
+    also:"Corporate strategy / FP&A inside a company, or restructuring & turnaround."},
+  banker:   {name:"The Relationship Banker", color:"#1F6F8B", funcs:"Corporate & Commercial Banking",
+    icon:'<path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/>',
+    blurb:"You win through <b>trust</b>. People open up to you, and you genuinely enjoy understanding someone's whole situation and solving their real problems. You value steadiness over drama and being a long-term advisor over a quick hit. Corporate and commercial banking are relationship games — and you're a natural at them.",
+    traits:["Trusted","Steady","Personable","Advisory"],
+    also:"Transaction banking, or insurance & actuarial work."},
+  guardian: {name:"The Guardian", color:"#5A4FB5", funcs:"Risk & Compliance",
+    icon:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+    blurb:"You see what could go wrong before anyone else does, and you have the spine to say so. You're principled, cool under pressure, and you trust your own judgement even when it's unpopular. Risk and compliance roles need exactly this: sharp eyes, independence, and the <b>integrity to protect</b> everyone else.",
+    traits:["Sharp-eyed","Principled","Cool-headed","Independent"],
+    also:"Audit & assurance (Big 4) or internal audit — the same eye for what's off."},
+  architect:{name:"The Architect", color:"#7A6A4F", funcs:"Operations · Treasury · Product Control",
+    icon:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+    blurb:"You make the machine run. You think in <b>systems and processes</b>, you spot the one thing that's off, and you take quiet pride in everything working exactly as it should. Treasury, operations and product control are the backbone of every institution — and they depend on precise, reliable, systematic people like you.",
+    traits:["Precise","Systematic","Reliable","Composed"],
+    also:"Corporate FP&A, data & analytics, or fintech product."},
+  quant:    {name:"The Quant", color:"#2E6BD6", funcs:"Quant Research · Quant Trading · Quant Dev",
+    icon:'<path d="M3 20h18"/><path d="M4 20c4 0 4-13 8-13s4 13 8 13"/>',
+    blurb:"You see the world as <b>patterns and probabilities</b>. You'd trust a well-built model over a gut feeling any day, you love a hard maths or coding problem, and you find your edge in the data. Quant research, quant trading and quant development reward exactly this: rigour, code, and an advantage built from numbers.",
+    traits:["Logical","Code-fluent","Probabilistic","Rigorous"],
+    also:"Data science, risk modelling, or fintech engineering."},
+  wealth:   {name:"The Wealth Advisor", color:"#138A6B", funcs:"Wealth Management · Private Banking",
+    icon:'<path d="M12 21v-7"/><path d="M12 14c0-3.3 2.2-5.5 5.5-5.5C17.5 11.8 15.3 14 12 14z"/><path d="M12 14c0-3.3-2.2-5.5-5.5-5.5C6.5 11.8 8.7 14 12 14z"/>',
+    blurb:"You're great with people <b>and</b> you genuinely care about their money. You build trust over years, you're discreet, and you like helping someone reach a real-life goal rather than just chasing a return. Wealth management and private banking — huge industries in Singapore — run on exactly this blend of relationships and investing.",
+    traits:["Discreet","Personable","Long-term","Trusted"],
+    also:"Family-office work, asset management, or sustainable & ESG investing."},
+};
+
+/* ============ QUESTIONS: everyday-life scenarios ============ */
+const Q = [
+  { scene:'<path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+    q:"You're planning a trip with your friends. What are you actually doing?",
+    opts:[
+      {t:"Taking charge — locking in flights and hotels fast before prices move", w:{dealmaker:2,trader:1}},
+      {t:"Making a colour-coded itinerary so absolutely nothing goes wrong", w:{architect:2,guardian:1}},
+      {t:"Pushing everyone toward the wild, off-the-map option", w:{vc:2}},
+      {t:"Comparing every option on a spreadsheet before I commit", w:{analyst:2,quant:1}},
+    ]},
+  { scene:'<path d="M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 9h2.5a2.5 2.5 0 0 1 0 5H17"/><path d="M7 3v2M11 3v2"/>',
+    q:"A new café opens near you. How do you show up?",
+    opts:[
+      {t:"I bring my whole friend group; soon the staff know my order", w:{banker:2,wealth:1}},
+      {t:"I read the reviews and form strong opinions before I even go", w:{analyst:2}},
+      {t:"I'm there opening day — first, before it becomes a thing", w:{trader:2}},
+      {t:"I clock that their queue system's a mess and spot exactly how to fix it", w:{pe:2,guardian:1}},
+    ]},
+  { scene:'<rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 20h8M12 17v3"/><path d="M7 9h6M7 12h4"/>',
+    q:"It's a group project and the plan is a bit of a mess. You…",
+    opts:[
+      {t:"Take the messy plan and turn it into something that actually wins", w:{pe:2,dealmaker:1}},
+      {t:"Keep everyone on track so we hit the deadline no matter what", w:{dealmaker:2,architect:1}},
+      {t:"Quietly flag the flaw that'll sink us if nobody fixes it", w:{guardian:2}},
+      {t:"Rally the team and smooth over everyone's egos", w:{banker:2,vc:1}},
+    ]},
+  { scene:'<path d="M4 5a2 2 0 0 1 2-2h6v17H6a2 2 0 0 0-2 2z"/><path d="M20 5a2 2 0 0 0-2-2h-6v17h6a2 2 0 0 1 2 2z"/>',
+    q:"Your idea of a perfect Saturday is…",
+    opts:[
+      {t:"Totally spontaneous — decide what to do as the day unfolds", w:{trader:2}},
+      {t:"Losing myself in a puzzle, a strategy game, or a bit of code", w:{quant:2,analyst:1}},
+      {t:"Hosting everyone — I'm the connector in the group", w:{banker:2,wealth:1}},
+      {t:"Finally fixing up the thing that's been bugging me for weeks", w:{pe:2,architect:1}},
+    ]},
+  { scene:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M14.6 9.3c0-1.2-1.2-1.9-2.6-1.9s-2.6.7-2.6 2 1.2 1.7 2.6 1.7 2.6.5 2.6 1.8-1.2 1.9-2.6 1.9-2.6-.8-2.6-1.9"/>',
+    q:"You unexpectedly get $1,000. First instinct?",
+    opts:[
+      {t:"Put it on something with a real shot at a quick win", w:{trader:2}},
+      {t:"Build a quick model to work out the mathematically optimal move", w:{quant:2,analyst:1}},
+      {t:"Back a friend's new idea I genuinely believe in", w:{vc:2}},
+      {t:"Plan it so it's still quietly growing for me in ten years", w:{wealth:2,pe:1}},
+    ]},
+  { scene:'<path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/>',
+    q:"Be honest — how would your friends describe you?",
+    opts:[
+      {t:"The one who reads people and gives the best advice", w:{wealth:2,banker:1}},
+      {t:"The one who's weirdly early on every trend", w:{vc:2,trader:1}},
+      {t:"The one who spots what everyone else missed", w:{guardian:2,analyst:1}},
+      {t:"The one who somehow gets the whole thing organised", w:{architect:2,dealmaker:1}},
+    ]},
+  { scene:'<path d="M13 2L3 14h7l-1 8 10-12h-7z"/>',
+    q:"A plan falls apart at the last minute. Your move?",
+    opts:[
+      {t:"I love it — I'll improvise a fix on the spot", w:{trader:2,dealmaker:1}},
+      {t:"I grind through every option until it's sorted, however long it takes", w:{dealmaker:2}},
+      {t:"I had a backup ready; honestly, I saw this coming", w:{guardian:2,analyst:1}},
+      {t:"I work my contacts — I always know someone who can help", w:{banker:2,vc:1}},
+    ]},
+  { scene:'<path d="M8 4h8v4a4 4 0 0 1-8 0z"/><path d="M8 5H5v2a3 3 0 0 0 3 3M16 5h3v2a3 3 0 0 1-3 3"/><path d="M10 13h4M9 20h6M12 13v4"/>',
+    q:"What would you secretly love to be known for?",
+    opts:[
+      {t:"Being right when everyone doubted me", w:{analyst:2,quant:1}},
+      {t:"Taking something undervalued and turning it into something big", w:{pe:2,vc:1}},
+      {t:"Being the person people trust with their money and their plans", w:{wealth:2,banker:1}},
+      {t:"Building something that just works, flawlessly, for years", w:{architect:2,pe:1}},
+    ]},
+  { scene:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+    q:"You're determined to win a game or competition. What's your edge?",
+    opts:[
+      {t:"I crunch the numbers and find the mathematically optimal strategy", w:{quant:2,analyst:1}},
+      {t:"I read my opponents and adapt in the moment", w:{trader:2,banker:1}},
+      {t:"I just have a feel for where things are heading", w:{vc:2}},
+      {t:"I out-prepare everyone — I've run through every scenario", w:{guardian:2,architect:1}},
+    ]},
+  { scene:'<path d="M20.8 5.6a4.6 4.6 0 0 0-6.5 0L12 7.9 9.7 5.6a4.6 4.6 0 1 0-6.5 6.5L12 21l8.8-8.9a4.6 4.6 0 0 0 0-6.5z"/>',
+    q:"A friend comes to you stressed about money. You…",
+    opts:[
+      {t:"Sit with them and build a calm, long-term plan together", w:{wealth:2,banker:1}},
+      {t:"Pull up the data and show them exactly what's optimal", w:{quant:2,analyst:1}},
+      {t:"Help them renegotiate and restructure what they owe", w:{dealmaker:2,pe:1}},
+      {t:"Help them set up a system so it never gets messy again", w:{architect:2,guardian:1}},
+    ]},
+];
+
+/* ============ ENGINE ============ */
+const app = document.getElementById("app");
+let step = 0;
+let scores = {};
+Object.keys(TYPES).forEach(k=>scores[k]=0);
+
+function render(){
+  if(step===0) return intro();
+  if(step>=1 && step<=Q.length) return question(step-1);
+  return result();
+}
+
+function intro(){
+  app.innerHTML = `<div class="intro fade">
+    <div class="eyebrow">Exploring Finance Pathways · Career Taster</div>
+    <h1>Which finance <em>pathway</em> are you?</h1>
+    <p>Ten everyday scenarios. No right answers, no finance knowledge needed — just go with your gut. At the end you'll get the finance function that fits how you actually think.</p>
+    <div class="badges"><span>10 questions</span><span>~2 minutes</span><span>10 possible types</span></div>
+    <button class="btn" id="start">Start the quiz →</button>
+    <div class="note">Just for fun — a conversation starter, not career advice.</div>
+  </div>`;
+  document.getElementById("start").onclick=()=>{step=1;render();};
+}
+
+function question(i){
+  const item=Q[i];
+  const pct=Math.round((i/Q.length)*100);
+  app.innerHTML = `
+    <div class="progress">
+      <span class="eyebrow">Pathway Finder</span>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <span class="count">${i+1} / ${Q.length}</span>
+    </div>
+    <div class="fade">
+      <div class="scene"><svg viewBox="0 0 24 24" fill="none" stroke="var(--petrol)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${item.scene}</svg></div>
+      <div class="qnum">Scenario ${String(i+1).padStart(2,"0")}</div>
+      <h2 class="q">${item.q}</h2>
+      <div class="opts">
+        ${item.opts.map((o,j)=>`<button class="opt" data-j="${j}"><span class="key">${"ABCD"[j]}</span><span>${o.t}</span></button>`).join("")}
+      </div>
+    </div>`;
+  requestAnimationFrame(()=>{app.querySelector(".bar i").style.width=pct+"%";});
+  app.querySelectorAll(".opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const w=item.opts[btn.dataset.j].w;
+      for(const k in w) scores[k]+=w[k];
+      step++; render();
+      window.scrollTo({top:0,behavior:"smooth"});
+    };
+  });
+}
+
+function ranked(){ return Object.keys(scores).sort((a,b)=>scores[b]-scores[a]); }
+
+function result(){
+  const order=ranked();
+  const top=TYPES[order[0]], second=TYPES[order[1]];
+  app.innerHTML = `
+    <div class="result fade">
+      <div class="eyebrow">Your finance pathway</div>
+      <div class="rbadge" style="background:${hexa(top.color,.12)}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="${top.color}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${top.icon}</svg>
+      </div>
+      <h2 style="color:${top.color}">${top.name}</h2>
+      <div class="functions">${top.funcs}</div>
+      <div class="writeup">${top.blurb}</div>
+      <div class="traits">${top.traits.map(t=>`<span style="background:${top.color}">${t}</span>`).join("")}</div>
+      <div class="also"><b>You might also explore</b>${top.also}</div>
+      <div class="runner">Your runner-up streak: <b>${second.name}</b> — most people are a blend, so it's worth exploring both.</div>
+      <div class="ractions">
+        <button class="btn ghost" id="gallery">Peek at all 10 pathways</button>
+        <button class="btn" id="again">Take it again</button>
+      </div>
+      <div class="gallery" id="gal">
+        <h3>The ten finance pathways</h3>
+        <div class="grid">
+          ${Object.values(TYPES).map(t=>`
+            <div class="gcard">
+              <div class="gi" style="background:${hexa(t.color,.12)}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="${t.color}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${t.icon}</svg>
+              </div>
+              <div><h4>${t.name}</h4><p>${t.funcs}</p></div>
+            </div>`).join("")}
+        </div>
+      </div>
+      <div class="credit">Built for the Exploring Finance Pathways webinar</div>
+    </div>`;
+  document.getElementById("again").onclick=()=>{
+    step=0; Object.keys(scores).forEach(k=>scores[k]=0); render();
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+  document.getElementById("gallery").onclick=(e)=>{
+    const g=document.getElementById("gal");
+    g.classList.toggle("show");
+    e.target.textContent=g.classList.contains("show")?"Hide the 10 pathways":"Peek at all 10 pathways";
+  };
+}
+
+function hexa(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Finance Pathways · Live Markets Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2F4F3; --surface:#FFFFFF; --ink:#16201D; --petrol:#0C4A45;
+    --petrol-soft:#0C4A4514; --amber:#D98A1E; --up:#1E7A4F; --down:#C0473C;
+    --muted:#5E6B66; --line:#E2E6E3;
+    --serif:'Fraunces',Georgia,serif; --sans:'Archivo',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .ticker{background:var(--ink);color:#EDEFEC;overflow:hidden;white-space:nowrap;border-bottom:1px solid #000;position:relative}
+  .ticker-track{display:inline-block;padding:9px 0;animation:scroll 60s linear infinite;font-family:var(--mono);font-size:13px}
+  .ticker:hover .ticker-track{animation-play-state:paused}
+  .ticker-item{padding:0 26px;position:relative}
+  .ticker-item::before{content:'';position:absolute;left:0;top:50%;width:5px;height:5px;background:var(--amber);border-radius:50%;transform:translateY(-50%)}
+  .ticker-item b{color:#fff;font-weight:600}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.ticker-track{animation:none;padding-left:20px}}
+  header{padding:26px 24px 0;max-width:1180px;margin:0 auto}
+  .masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:16px}
+  .brand .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--petrol);font-weight:600}
+  .brand h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,5vw,44px);line-height:1.02;letter-spacing:-.01em;margin-top:4px}
+  .brand h1 em{font-style:italic;color:var(--petrol)}
+  .status{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+  .live{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--down);box-shadow:0 0 0 0 rgba(192,71,60,.6);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(192,71,60,.5)}70%{box-shadow:0 0 0 7px rgba(192,71,60,0)}100%{box-shadow:0 0 0 0 rgba(192,71,60,0)}}
+  .updated{font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .controls{display:flex;gap:8px}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+  .toggle button{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:7px 13px;border:0;background:transparent;cursor:pointer;color:var(--muted);font-weight:500}
+  .toggle button.on{background:var(--ink);color:#fff}
+  .refresh{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;padding:7px 14px;border:1px solid var(--ink);border-radius:999px;background:var(--surface);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .refresh:hover{background:var(--ink);color:#fff}
+  .refresh svg{width:13px;height:13px}
+  nav.tabs{max-width:1180px;margin:0 auto;padding:14px 24px 0;display:flex;gap:4px;flex-wrap:wrap}
+  .tab{font-family:var(--sans);font-size:14px;font-weight:600;padding:11px 16px;border:0;background:transparent;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;border-radius:6px 6px 0 0}
+  .tab .n{font-family:var(--mono);font-size:11px;color:var(--amber);margin-right:7px;font-weight:600}
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--ink);border-bottom-color:var(--petrol);background:var(--surface)}
+  main{max-width:1180px;margin:0 auto;padding:0 24px 60px}
+  .panel{background:var(--surface);border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;padding:26px;display:grid;grid-template-columns:1fr 300px;gap:30px}
+  @media(max-width:820px){.panel{grid-template-columns:1fr;padding:20px}}
+  .panel-head h2{font-family:var(--serif);font-weight:500;font-size:26px;letter-spacing:-.01em}
+  .panel-head p{color:var(--muted);font-size:14.5px;margin-top:6px;max-width:60ch}
+  .skills{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+  .chip{font-family:var(--mono);font-size:11px;letter-spacing:.02em;padding:5px 10px;background:var(--petrol-soft);color:var(--petrol);border-radius:6px;font-weight:500}
+  .feed-label{display:flex;align-items:center;gap:10px;margin:22px 0 14px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .feed-label::after{content:'';flex:1;height:1px;background:var(--line)}
+  .card{border-top:1px solid var(--line);padding:16px 0;display:block;text-decoration:none;transition:padding-left .15s}
+  .card:first-of-type{border-top:0}
+  .card:hover{padding-left:8px}
+  .card-meta{display:flex;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap}
+  .src{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--petrol);padding:3px 8px;border-radius:4px}
+  .date{font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .card h3{font-size:17px;line-height:1.3;font-weight:600;letter-spacing:-.01em}
+  .card:hover h3{color:var(--petrol)}
+  .card .arrow{font-family:var(--mono);font-size:12px;color:var(--amber);margin-top:8px;display:inline-block;opacity:0;transition:opacity .15s}
+  .card:hover .arrow{opacity:1}
+  aside{border-left:1px solid var(--line);padding-left:26px}
+  @media(max-width:820px){aside{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:22px}}
+  aside h4{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:14px}
+  .source-link{display:flex;align-items:baseline;gap:9px;padding:9px 0;border-top:1px solid var(--line);text-decoration:none;font-size:14px}
+  .source-link:first-of-type{border-top:0}
+  .source-link:hover .sname{color:var(--petrol)}
+  .source-link .sname{font-weight:600}
+  .source-link .stag{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-left:auto;white-space:nowrap}
+  .pods{margin-top:24px}
+  .skel{border-top:1px solid var(--line);padding:16px 0}
+  .skel:first-child{border-top:0}
+  .skel .b{background:linear-gradient(90deg,#eef0ee 25%,#f6f7f6 50%,#eef0ee 75%);background-size:200% 100%;animation:sh 1.3s infinite;border-radius:5px;height:13px;margin:6px 0}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  .state{padding:30px 0;color:var(--muted);font-size:14.5px}
+  .state b{color:var(--ink);display:block;margin-bottom:6px;font-size:15px}
+  .retry{margin-top:12px;font-family:var(--mono);font-size:12px;font-weight:600;padding:8px 15px;border:1px solid var(--ink);border-radius:8px;background:transparent;cursor:pointer}
+  .retry:hover{background:var(--ink);color:#fff}
+  .foot{max-width:1180px;margin:0 auto;padding:0 24px;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="ticker"><div class="ticker-track" id="ticker"><span class="ticker-item">Loading live headlines…</span></div></div>
+
+<header>
+  <div class="masthead">
+    <div class="brand">
+      <div class="eyebrow">Exploring Finance Pathways</div>
+      <h1>The <em>Markets</em> Desk</h1>
+    </div>
+    <div class="status">
+      <span class="live"><span class="dot"></span> Live · auto-updating</span>
+      <span class="updated" id="updated">—</span>
+      <div class="controls">
+        <div class="toggle" id="region">
+          <button data-r="Global" class="on">Global</button>
+          <button data-r="Singapore &amp; Asia">SG &amp; Asia</button>
+        </div>
+        <button class="refresh" id="refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v5h-5"/></svg> Refresh</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+<main><div class="panel" id="panel"></div></main>
+<div class="foot" id="foot"></div>
+
+<script>
+/* ---------- CONTENT MODEL: the finance functions the webinar covers ---------- */
+const TABS = [
+  { id:"pulse", label:"Finance Pulse", title:"Today's finance pulse",
+    blurb:"A fast read on what's moving across finance right now — markets, deals, banks and the wider economy. The opening segment of the session: the lay of the land, not the detail.",
+    skills:["Big-picture thinking","Connecting the dots","Commercial awareness"],
+    query:"financial markets OR banking OR deals OR economy",
+    sources:[
+      {n:"Bloomberg Markets",u:"https://www.bloomberg.com/markets",t:"Real-time"},
+      {n:"Financial Times",u:"https://www.ft.com/markets",t:"Analysis"},
+      {n:"Reuters Markets",u:"https://www.reuters.com/markets/",t:"Wires"},
+      {n:"WSJ Markets",u:"https://www.wsj.com/news/markets",t:"US lens"},
+      {n:"The Straits Times",u:"https://www.straitstimes.com/business",t:"SG"},
+    ],
+    pods:[
+      {n:"Unhedged (FT)",u:"https://www.ft.com/unhedged-podcast"},
+      {n:"Thoughts on the Market",u:"https://www.morganstanley.com/ideas/thoughts-on-the-market-podcast"},
+    ]},
+  { id:"capmkts", label:"Capital Markets", title:"Capital Markets",
+    blurb:"Where securities are priced, traded and researched. Sales & Trading lives in real time; Equity Research forms deep views; Asset Managers and Hedge Funds put capital to work. Public markets, fast feedback.",
+    skills:["S&T","Equity Research","Asset Management","Hedge Funds","Buy-side & Sell-side"],
+    query:"stock market OR trading OR equity research OR hedge fund OR asset management",
+    sources:[
+      {n:"Bloomberg Markets",u:"https://www.bloomberg.com/markets",t:"Trading"},
+      {n:"FT Markets",u:"https://www.ft.com/markets",t:"Research"},
+      {n:"Institutional Investor",u:"https://www.institutionalinvestor.com/",t:"Buy-side"},
+      {n:"SGX",u:"https://www.sgx.com",t:"SG exchange"},
+      {n:"MAS",u:"https://www.mas.gov.sg",t:"SG regulator"},
+    ],
+    pods:[
+      {n:"Goldman Sachs Exchanges",u:"https://www.goldmansachs.com/insights/podcasts"},
+      {n:"Thoughts on the Market",u:"https://www.morganstanley.com/ideas/thoughts-on-the-market-podcast"},
+    ]},
+  { id:"deals", label:"Deals & Advisory", title:"Deals & Advisory",
+    blurb:"The transaction world. Investment Banking advises on raising capital and M&A; Private Equity buys and improves companies; Venture Capital backs early-stage founders. High intensity, deal cycles, big outcomes.",
+    skills:["Investment Banking","Private Equity","Venture Capital","M&A","Valuation","Deal execution"],
+    query:"merger OR acquisition OR IPO OR private equity OR venture capital funding",
+    sources:[
+      {n:"DealStreetAsia",u:"https://www.dealstreetasia.com",t:"Asia deals"},
+      {n:"PitchBook News",u:"https://pitchbook.com/news",t:"PE & VC"},
+      {n:"Crunchbase News",u:"https://news.crunchbase.com",t:"Startups"},
+      {n:"FT Due Diligence",u:"https://www.ft.com/due-diligence",t:"M&A"},
+      {n:"TechCrunch",u:"https://techcrunch.com/category/venture/",t:"VC"},
+    ],
+    pods:[
+      {n:"The Twenty Minute VC",u:"https://www.thetwentyminutevc.com/"},
+      {n:"Acquired",u:"https://www.acquired.fm/"},
+    ]},
+  { id:"banking", label:"Banking & Risk", title:"Banking & Risk",
+    blurb:"The backbone of the financial system. Corporate and Commercial Banking lend to and advise companies; Risk and Compliance keep the whole machine safe and within the rules. Relationship-driven and judgment-heavy.",
+    skills:["Corporate Banking","Commercial Banking","Credit Risk","Compliance","Regulation","Relationship management"],
+    query:"banking OR bank lending OR financial regulation OR compliance",
+    sources:[
+      {n:"The Banker",u:"https://www.thebanker.com",t:"Banking"},
+      {n:"Risk.net",u:"https://www.risk.net",t:"Risk"},
+      {n:"MAS",u:"https://www.mas.gov.sg",t:"SG regulator"},
+      {n:"Reuters Legal",u:"https://www.reuters.com/legal/",t:"Rules"},
+      {n:"Finextra",u:"https://www.finextra.com",t:"Bank tech"},
+    ],
+    pods:[
+      {n:"Bank On It",u:"https://bankonitpodcast.com/"},
+      {n:"Goldman Sachs Exchanges",u:"https://www.goldmansachs.com/insights/podcasts"},
+    ]},
+  { id:"ops", label:"Operations & Strategy", title:"Operations & Strategy",
+    blurb:"The engine room that lets everything else run. Middle Office, Operations, Treasury and Product Control manage cash, settle trades, control P&L and keep institutions liquid. Precision, systems thinking, quiet impact.",
+    skills:["Treasury","Operations","Product Control","Middle Office","Liquidity","Process"],
+    query:"fintech OR treasury OR payments OR bank operations",
+    sources:[
+      {n:"Treasury Today",u:"https://treasurytoday.com/",t:"Treasury"},
+      {n:"Finextra",u:"https://www.finextra.com",t:"Fintech"},
+      {n:"Risk.net",u:"https://www.risk.net",t:"Controls"},
+      {n:"The Banker",u:"https://www.thebanker.com",t:"Infra"},
+      {n:"Reuters Tech",u:"https://www.reuters.com/technology/",t:"Systems"},
+    ],
+    pods:[
+      {n:"Fintech Insider",u:"https://11fs.com/podcast"},
+      {n:"Goldman Sachs Exchanges",u:"https://www.goldmansachs.com/insights/podcasts"},
+    ]},
+];
+
+let region = "Global";
+let active = "pulse";
+const cache = {};
+const $ = s => document.querySelector(s);
+const panel = $("#panel"), tabsEl = $("#tabs");
+
+TABS.forEach((t,i)=>{
+  const b=document.createElement("button");
+  b.className="tab"+(i===0?" on":"");
+  b.dataset.id=t.id;
+  b.innerHTML=`<span class="n">${String(i+1).padStart(2,"0")}</span>${t.label}`;
+  b.onclick=()=>{active=t.id;syncTabs();render();};
+  tabsEl.appendChild(b);
+});
+function syncTabs(){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.id===active));}
+
+$("#region").querySelectorAll("button").forEach(b=>{
+  b.onclick=()=>{
+    region=b.dataset.r;
+    $("#region").querySelectorAll("button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    render(); refreshTicker();
+  };
+});
+$("#refresh").onclick=()=>{delete cache[active+"|"+region];render(true);refreshTicker(true);};
+
+/* ---------- LIVE FETCH: Google News RSS, with multiple fallback proxies ----------
+   Works on any static host and when you open this file directly in a browser.
+   (It will NOT load inside the Claude preview — that sandbox blocks outside
+   requests. Open the file or host it to see live news.)
+   For best reliability with a live audience, get a FREE rss2json key
+   (10,000 requests/day) at rss2json.com and paste it below. */
+const RSS2JSON_KEY = ""; // e.g. "abcd1234yourkey"
+
+function newsUrl(tab){
+  const sg = region !== "Global";
+  const q  = tab.query + (sg ? " Singapore OR Asia" : "");
+  const ed = sg ? "hl=en-SG&gl=SG&ceid=SG:en" : "hl=en-US&gl=US&ceid=US:en";
+  return "https://news.google.com/rss/search?q=" + encodeURIComponent(q) + "&" + ed;
+}
+function cleanTitle(headline, source){
+  const dash = headline.lastIndexOf(" - ");
+  if(dash>25 && headline.length-dash<40){ if(!source) source=headline.slice(dash+3); headline=headline.slice(0,dash); }
+  return [headline.trim(), source||"News"];
+}
+function parseXML(xmlText){
+  const doc = new DOMParser().parseFromString(xmlText, "text/xml");
+  return [...doc.querySelectorAll("item")].map(n=>{
+    const get = t => (n.querySelector(t)?.textContent || "").trim();
+    let [headline, source] = cleanTitle(get("title"), get("source"));
+    return { headline, source, date: reltime(get("pubDate")), url: get("link") };
+  });
+}
+async function getText(url){ const r=await fetch(url); if(!r.ok) throw new Error("http "+r.status); return r.text(); }
+
+async function fetchNews(tab, force){
+  const key = tab.id + "|" + region;
+  if(cache[key] && !force) return cache[key];
+  const enc = encodeURIComponent(newsUrl(tab));
+
+  const strategies = [
+    // 0) YOUR Netlify function (if you deployed netlify/functions/news.js) — same-origin, no key
+    async ()=>{ const items=parseXML(await getText("/.netlify/functions/news?url="+enc)); if(!items.length) throw new Error("netlify-fn: empty or not deployed (404)"); return items; },
+    // 1) codetabs proxy -> XML (free, no key, usually reliable)
+    async ()=>{ const items=parseXML(await getText("https://api.codetabs.com/v1/proxy/?quest="+enc)); if(!items.length) throw new Error("codetabs: empty"); return items; },
+    // 2) allorigins -> XML (free, no key)
+    async ()=>{ const items=parseXML(await getText("https://api.allorigins.win/raw?url="+enc)); if(!items.length) throw new Error("allorigins: empty"); return items; },
+    // 3) rss2json -> JSON (paste a free key in RSS2JSON_KEY above = most reliable)
+    async ()=>{
+      let api = "https://api.rss2json.com/v1/api.json?count=12&rss_url=" + enc;
+      if(RSS2JSON_KEY) api += "&api_key=" + RSS2JSON_KEY;
+      const r = await fetch(api); if(!r.ok) throw new Error("rss2json: http "+r.status);
+      const d = await r.json();
+      if(d.status!=="ok" || !Array.isArray(d.items) || !d.items.length) throw new Error("rss2json: "+(d.message||"no items"));
+      return d.items.map(it=>{ let [headline,source]=cleanTitle((it.title||"").trim(),(it.source&&it.source.name)||it.author||""); return {headline,source,date:reltime(it.pubDate),url:it.link}; });
+    },
+    // 4) corsproxy.io -> XML
+    async ()=>{ const items=parseXML(await getText("https://corsproxy.io/?url="+enc)); if(!items.length) throw new Error("corsproxy: empty"); return items; },
+  ];
+
+  const errs=[];
+  for(const strat of strategies){
+    try{ const items=(await strat()).slice(0,6); if(items.length){ cache[key]=items; return items; } }
+    catch(e){ errs.push(e.message||String(e)); }
+  }
+  window.__newsErrors = errs;
+  console.warn("[Markets Desk] all news sources failed:", errs);
+  throw new Error(errs.join(" | ") || "all sources failed");
+}
+
+function reltime(d){
+  if(!d) return "";
+  const t=new Date(String(d).replace(" ","T")); const h=(Date.now()-t)/36e5;
+  if(isNaN(h)) return "";
+  if(h<1) return Math.max(1,Math.round(h*60))+"m ago";
+  if(h<24) return Math.round(h)+"h ago";
+  return t.toLocaleDateString("en-SG",{day:"2-digit",month:"short"});
+}
+
+/* ---------- RENDER ---------- */
+function render(force){
+  const tab = TABS.find(t=>t.id===active);
+  panel.innerHTML = `
+    <section>
+      <div class="panel-head">
+        <h2>${tab.title}</h2>
+        <p>${tab.blurb}</p>
+        <div class="skills">${tab.skills.map(s=>`<span class="chip">${s}</span>`).join("")}</div>
+      </div>
+      <div class="feed-label">Live headlines · ${region}</div>
+      <div id="feed">${skeleton()}</div>
+    </section>
+    <aside>
+      <h4>Where to read more</h4>
+      ${tab.sources.map(s=>`<a class="source-link" href="${s.u}" target="_blank" rel="noopener"><span class="sname">${s.n}</span><span class="stag">${s.t}</span></a>`).join("")}
+      <div class="pods">
+        <h4>Podcasts</h4>
+        ${tab.pods.map(p=>`<a class="source-link" href="${p.u}" target="_blank" rel="noopener"><span class="sname">${p.n}</span><span class="stag">▶ listen</span></a>`).join("")}
+      </div>
+    </aside>`;
+
+  fetchNews(tab,force).then(items=>{
+    if(active!==tab.id) return;
+    $("#feed").innerHTML = items.length ? items.map(cardHTML).join("") : emptyState();
+    stamp();
+  }).catch(()=>{
+    if(active!==tab.id) return;
+    $("#feed").innerHTML = errorState();
+    $("#feed").querySelector(".retry").onclick=()=>render(true);
+  });
+}
+
+function cardHTML(it){
+  const url = it.url && /^https?:/.test(it.url) ? it.url : "#";
+  return `<a class="card" href="${url}" target="_blank" rel="noopener">
+    <div class="card-meta"><span class="src">${esc(it.source||"News")}</span><span class="date">${esc(it.date||"")}</span></div>
+    <h3>${esc(it.headline||"")}</h3>
+    <span class="arrow">Read full story →</span>
+  </a>`;
+}
+function skeleton(){return Array(4).fill(0).map(()=>`<div class="skel"><div class="b" style="width:30%"></div><div class="b" style="width:85%"></div><div class="b" style="width:60%"></div></div>`).join("");}
+function emptyState(){return `<div class="state"><b>No fresh stories came back this time.</b>The feed may be quiet for this filter right now. Try refreshing or switching region.<br><button class="retry">Try again</button></div>`;}
+function errorState(){
+  const errs=window.__newsErrors||[];
+  const list = errs.length ? errs.map(e=>`<div style="margin-top:3px">• ${esc(e)}</div>`).join("") : "—";
+  return `<div class="state"><b>Couldn't reach the live news feed.</b>Every news source it tried is unreachable from here. The sure fix is a free rss2json key (see README) pasted near the top of this file.<div style="font-family:var(--mono);font-size:11px;opacity:.85;margin-top:12px;text-align:left"><b style="display:block;margin-bottom:5px">What it tried:</b>${list}</div><br><button class="retry">Retry</button></div>`;
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+
+function stamp(){const now=new Date();$("#updated").textContent="Updated "+now.toLocaleString("en-SG",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});}
+$("#foot").innerHTML="Live headlines are pulled automatically from reputable outlets via Google News and refresh each time you open the page. Always read the full story at the source. Built for the Exploring Finance Pathways webinar.";
+
+/* ---------- TICKER ---------- */
+async function refreshTicker(force){
+  try{
+    const tab=TABS.find(t=>t.id==="pulse");
+    const items=await fetchNews(tab,force);
+    const row=items.map(it=>`<span class="ticker-item"><b>${esc(it.source||"")}</b> ${esc(it.headline||"")}</span>`).join("");
+    $("#ticker").innerHTML=row+row;
+  }catch(e){ $("#ticker").innerHTML=`<span class="ticker-item">Live headlines will appear here once the feed loads — try Refresh.</span>`; }
+}
+
+render();
+refreshTicker();
+</script>
+</body>
+</html>
