@@ -9,21 +9,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F2F4F3; --surface:#FFFFFF; --ink:#16201D; --petrol:#0C4A45;
-    --petrol-soft:#0C4A4514; --amber:#D98A1E; --up:#1E7A4F; --down:#C0473C;
-    --muted:#5E6B66; --line:#E2E6E3;
+    --paper:#F3EDE6; --surface:#FFFDFA; --ink:#0B1C2C; --petrol:#114929;
+    --petrol-soft:#11492914; --amber:#F04A15; --up:#1E7A4F; --down:#C0473C;
+    --muted:#63605A; --line:#E7DFD4;
     --serif:'Fraunces',Georgia,serif; --sans:'Archivo',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
   body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
   a{color:inherit}
-  .ticker{background:var(--ink);color:#EDEFEC;overflow:hidden;white-space:nowrap;border-bottom:1px solid #000;position:relative}
+  .ticker{background:var(--ink);color:#EDEFEC;overflow:hidden;white-space:nowrap;border-bottom:1px solid #0B1C2C;position:relative}
   .ticker-track{display:inline-block;padding:9px 0;animation:scroll 60s linear infinite;font-family:var(--mono);font-size:13px}
   .ticker:hover .ticker-track{animation-play-state:paused}
   .ticker-item{padding:0 26px;position:relative}
   .ticker-item::before{content:'';position:absolute;left:0;top:50%;width:5px;height:5px;background:var(--amber);border-radius:50%;transform:translateY(-50%)}
-  .ticker-item b{color:#fff;font-weight:600}
+  .ticker-item b{color:#FFFDFA;font-weight:600}
   @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   @media (prefers-reduced-motion:reduce){.ticker-track{animation:none;padding-left:20px}}
   header{padding:26px 24px 0;max-width:1180px;margin:0 auto}
@@ -39,9 +39,9 @@
   .controls{display:flex;gap:8px}
   .toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
   .toggle button{font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:7px 13px;border:0;background:transparent;cursor:pointer;color:var(--muted);font-weight:500}
-  .toggle button.on{background:var(--ink);color:#fff}
+  .toggle button.on{background:var(--ink);color:#FFFDFA}
   .refresh{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;padding:7px 14px;border:1px solid var(--ink);border-radius:999px;background:var(--surface);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
-  .refresh:hover{background:var(--ink);color:#fff}
+  .refresh:hover{background:var(--ink);color:#FFFDFA}
   .refresh svg{width:13px;height:13px}
   nav.tabs{max-width:1180px;margin:0 auto;padding:14px 24px 0;display:flex;gap:4px;flex-wrap:wrap}
   .tab{font-family:var(--sans);font-size:14px;font-weight:600;padding:11px 16px;border:0;background:transparent;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;border-radius:6px 6px 0 0}
@@ -61,7 +61,7 @@
   .card:first-of-type{border-top:0}
   .card:hover{padding-left:8px}
   .card-meta{display:flex;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap}
-  .src{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--petrol);padding:3px 8px;border-radius:4px}
+  .src{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#FFFDFA;background:var(--petrol);padding:3px 8px;border-radius:4px}
   .date{font-family:var(--mono);font-size:11px;color:var(--muted)}
   .card h3{font-size:17px;line-height:1.3;font-weight:600;letter-spacing:-.01em}
   .card:hover h3{color:var(--petrol)}
@@ -83,7 +83,7 @@
   .state{padding:30px 0;color:var(--muted);font-size:14.5px}
   .state b{color:var(--ink);display:block;margin-bottom:6px;font-size:15px}
   .retry{margin-top:12px;font-family:var(--mono);font-size:12px;font-weight:600;padding:8px 15px;border:1px solid var(--ink);border-radius:8px;background:transparent;cursor:pointer}
-  .retry:hover{background:var(--ink);color:#fff}
+  .retry:hover{background:var(--ink);color:#FFFDFA}
   .foot{max-width:1180px;margin:0 auto;padding:0 24px;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.6}
 </style>
 </head>

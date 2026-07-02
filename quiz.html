@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F2F4F3; --surface:#FFFFFF; --ink:#16201D;
-    --petrol:#0C4A45; --amber:#D98A1E; --muted:#5E6B66; --line:#E2E6E3;
+    --paper:#F3EDE6; --surface:#FFFDFA; --ink:#0B1C2C;
+    --petrol:#114929; --amber:#F04A15; --muted:#63605A; --line:#E7DFD4;
     --serif:'Fraunces',Georgia,serif; --sans:'Archivo',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -28,7 +28,7 @@
   .intro p{color:var(--muted);font-size:17px;max-width:46ch;margin:20px auto 0}
   .badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:30px auto 0;max-width:480px}
   .badges span{font-family:var(--mono);font-size:11px;padding:6px 11px;border:1px solid var(--line);border-radius:99px;background:var(--surface);color:var(--muted)}
-  .btn{font-family:var(--sans);font-weight:700;font-size:16px;letter-spacing:.01em;color:#fff;background:var(--ink);border:0;border-radius:99px;padding:16px 34px;cursor:pointer;margin-top:34px;transition:transform .12s,background .2s}
+  .btn{font-family:var(--sans);font-weight:700;font-size:16px;letter-spacing:.01em;color:#FFFDFA;background:var(--ink);border:0;border-radius:99px;padding:16px 34px;cursor:pointer;margin-top:34px;transition:transform .12s,background .2s}
   .btn:hover{background:var(--petrol);transform:translateY(-2px)}
   .note{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:18px}
   .scene{text-align:center;margin-bottom:6px}
@@ -37,9 +37,9 @@
   .q{font-family:var(--serif);font-weight:500;font-size:clamp(24px,5vw,32px);line-height:1.18;letter-spacing:-.01em;text-align:center;margin-bottom:28px}
   .opts{display:flex;flex-direction:column;gap:11px}
   .opt{display:flex;align-items:center;gap:14px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:17px 18px;cursor:pointer;font-family:var(--sans);font-size:16px;color:var(--ink);line-height:1.35;transition:border-color .15s,transform .12s,box-shadow .15s}
-  .opt:hover{border-color:var(--petrol);transform:translateY(-2px);box-shadow:0 6px 20px -12px rgba(12,74,69,.5)}
+  .opt:hover{border-color:var(--petrol);transform:translateY(-2px);box-shadow:0 6px 20px -12px rgba(17,73,41,.5)}
   .opt .key{font-family:var(--mono);font-weight:600;font-size:13px;color:var(--petrol);border:1px solid var(--line);border-radius:8px;width:30px;height:30px;display:grid;place-items:center;flex-shrink:0}
-  .opt:hover .key{background:var(--petrol);color:#fff;border-color:var(--petrol)}
+  .opt:hover .key{background:var(--petrol);color:#FFFDFA;border-color:var(--petrol)}
   .result{text-align:center}
   .rbadge{width:120px;height:120px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center}
   .rbadge svg{width:62px;height:62px}
@@ -49,14 +49,14 @@
   .writeup{font-size:17px;line-height:1.6;color:#243029;max-width:48ch;margin:0 auto 22px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
   .writeup b{color:var(--ink)}
   .traits{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-  .traits span{font-family:var(--mono);font-size:12px;padding:7px 13px;border-radius:99px;font-weight:500;color:#fff}
+  .traits span{font-family:var(--mono);font-size:12px;padding:7px 13px;border-radius:99px;font-weight:500;color:#FFFDFA}
   .also{font-size:14px;line-height:1.5;color:var(--muted);max-width:46ch;margin:0 auto 24px;padding:13px 16px;border:1px dashed var(--line);border-radius:12px}
   .also b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:5px}
   .runner{font-size:14.5px;color:var(--muted);margin-bottom:26px}
   .runner b{color:var(--ink)}
   .ractions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
   .btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--ink);font-size:14px;padding:13px 22px}
-  .btn.ghost:hover{background:var(--ink);color:#fff;transform:translateY(-2px)}
+  .btn.ghost:hover{background:var(--ink);color:#FFFDFA;transform:translateY(-2px)}
   .gallery{margin-top:40px;display:none;text-align:left}
   .gallery.show{display:block}
   .gallery h3{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:center;margin-bottom:18px}
@@ -84,7 +84,7 @@ const TYPES = {
     blurb:"You think in real time. You're comfortable making a call with incomplete information, being wrong fast, and moving on. A live scoreboard energises rather than scares you, and you read the <b>mood of the room</b> as much as the facts. Trading desks and hedge funds reward exactly this: decisiveness, nerve, and a competitive streak.",
     traits:["Decisive","Fast","Risk-aware","Competitive"],
     also:"Quant trading, or a markets seat at an institution like MAS or GIC."},
-  analyst:  {name:"The Researcher", color:"#0C4A45", funcs:"Equity Research · Asset Management",
+  analyst:  {name:"The Researcher", color:"#114929", funcs:"Equity Research · Asset Management",
     icon:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
     blurb:"You'd rather be <b>right over time</b> than loud right now. You enjoy going three layers deeper than everyone else, forming a view nobody handed you, and defending it with evidence. Equity research and asset management pay you to do exactly that — build conviction, write it down, and let the thesis play out.",
     traits:["Analytical","Curious","Patient","Opinionated"],
@@ -94,7 +94,7 @@ const TYPES = {
     blurb:"You thrive when the stakes and the pressure are high. You're polished, allergic to a sloppy job, and you find an odd satisfaction in pulling something complex over the line on no sleep. Investment banking runs on exactly that stamina, attention to detail under pressure, and sheer <b>drive to close</b>.",
     traits:["Driven","Polished","High stamina","Precise"],
     also:"Corporate development or strategy consulting — the same deal energy, company-side."},
-  vc:       {name:"The Backer", color:"#D98A1E", funcs:"Venture Capital",
+  vc:       {name:"The Backer", color:"#F04A15", funcs:"Venture Capital",
     icon:'<path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5L12 16l-5 2.6 1-5.5-4-3.9 5.5-.8z"/>',
     blurb:"You back <b>people and possibility</b> before there's proof. Ambiguity doesn't paralyse you — it excites you. You spot patterns early, you're optimistic by default, and you'd rather bet on a brilliant person with a half-formed idea than wait for the safe option. That instinct is the heart of venture capital.",
     traits:["Visionary","People-first","Optimistic","Bold"],
